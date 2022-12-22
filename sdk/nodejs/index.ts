@@ -5,31 +5,47 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 // Export members:
-export * from "./provider";
-export * from "./staticPage";
+export { HasDefaultArgs } from "./hasDefault";
+export type HasDefault = import("./hasDefault").HasDefault;
+export const HasDefault: typeof import("./hasDefault").HasDefault = null as any;
+utilities.lazyLoad(exports, ["HasDefault"], () => require("./hasDefault"));
 
-// Import resources to register:
-import { StaticPage } from "./staticPage";
+export { NoDefaultArgs } from "./noDefault";
+export type NoDefault = import("./noDefault").NoDefault;
+export const NoDefault: typeof import("./noDefault").NoDefault = null as any;
+utilities.lazyLoad(exports, ["NoDefault"], () => require("./noDefault"));
+
+export { ProviderArgs } from "./provider";
+export type Provider = import("./provider").Provider;
+export const Provider: typeof import("./provider").Provider = null as any;
+utilities.lazyLoad(exports, ["Provider"], () => require("./provider"));
+
+
+// Export sub-modules:
+import * as types from "./types";
+
+export {
+    types,
+};
 
 const _module = {
     version: utilities.getVersion(),
     construct: (name: string, type: string, urn: string): pulumi.Resource => {
         switch (type) {
-            case "xyz:index:StaticPage":
-                return new StaticPage(name, <any>undefined, { urn })
+            case "nested:index:HasDefault":
+                return new HasDefault(name, <any>undefined, { urn })
+            case "nested:index:NoDefault":
+                return new NoDefault(name, <any>undefined, { urn })
             default:
                 throw new Error(`unknown resource type ${type}`);
         }
     },
 };
-pulumi.runtime.registerResourceModule("xyz", "index", _module)
-
-import { Provider } from "./provider";
-
-pulumi.runtime.registerResourcePackage("xyz", {
+pulumi.runtime.registerResourceModule("nested", "index", _module)
+pulumi.runtime.registerResourcePackage("nested", {
     version: utilities.getVersion(),
     constructProvider: (name: string, type: string, urn: string): pulumi.ProviderResource => {
-        if (type !== "pulumi:providers:xyz") {
+        if (type !== "pulumi:providers:nested") {
             throw new Error(`unknown provider type ${type}`);
         }
         return new Provider(name, <any>undefined, { urn });

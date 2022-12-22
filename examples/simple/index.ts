@@ -1,8 +1,21 @@
-import * as xyz from "@pulumi/xyz";
+import * as nested from "@pulumi/nested";
+import * as random from "@pulumi/random";
 
-const page = new xyz.StaticPage("page", {
-    indexContent: "<html><body><p>Hello world!</p></body></html>",
+const output = new random.RandomString("random", {
+    length: 12,
 });
 
-export const bucket = page.bucket;
-export const url = page.websiteUrl;
+const ok = new nested.NoDefault("nothing", {
+    value: "cat",
+    nested: {
+        value: output.result,
+    },
+});
+
+// Comment out the below to get a successful preview/update.
+const result = new nested.HasDefault("nothing", {
+    value: "cat",
+    nested: {
+        value: output.result,
+    },
+});

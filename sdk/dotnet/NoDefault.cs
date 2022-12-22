@@ -7,33 +7,24 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Serialization;
 
-namespace Pulumi.Xyz
+namespace Pulumi.Nested
 {
-    [XyzResourceType("xyz:index:StaticPage")]
-    public partial class StaticPage : Pulumi.ComponentResource
+    [NestedResourceType("nested:index:NoDefault")]
+    public partial class NoDefault : global::Pulumi.ComponentResource
     {
-        /// <summary>
-        /// The bucket resource.
-        /// </summary>
-        [Output("bucket")]
-        public Output<Pulumi.Aws.S3.Bucket> Bucket { get; private set; } = null!;
-
-        /// <summary>
-        /// The website URL.
-        /// </summary>
-        [Output("websiteUrl")]
-        public Output<string> WebsiteUrl { get; private set; } = null!;
+        [Output("value")]
+        public Output<string> Value { get; private set; } = null!;
 
 
         /// <summary>
-        /// Create a StaticPage resource with the given unique name, arguments, and options.
+        /// Create a NoDefault resource with the given unique name, arguments, and options.
         /// </summary>
         ///
         /// <param name="name">The unique name of the resource</param>
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
-        public StaticPage(string name, StaticPageArgs args, ComponentResourceOptions? options = null)
-            : base("xyz:index:StaticPage", name, args ?? new StaticPageArgs(), MakeResourceOptions(options, ""), remote: true)
+        public NoDefault(string name, NoDefaultArgs? args = null, ComponentResourceOptions? options = null)
+            : base("nested:index:NoDefault", name, args ?? new NoDefaultArgs(), MakeResourceOptions(options, ""), remote: true)
         {
         }
 
@@ -50,16 +41,17 @@ namespace Pulumi.Xyz
         }
     }
 
-    public sealed class StaticPageArgs : Pulumi.ResourceArgs
+    public sealed class NoDefaultArgs : global::Pulumi.ResourceArgs
     {
-        /// <summary>
-        /// The HTML content for index.html.
-        /// </summary>
-        [Input("indexContent", required: true)]
-        public Input<string> IndexContent { get; set; } = null!;
+        [Input("nested")]
+        public Input<Inputs.NestedNoDefaultArgs>? Nested { get; set; }
 
-        public StaticPageArgs()
+        [Input("value")]
+        public Input<string>? Value { get; set; }
+
+        public NoDefaultArgs()
         {
         }
+        public static new NoDefaultArgs Empty => new NoDefaultArgs();
     }
 }

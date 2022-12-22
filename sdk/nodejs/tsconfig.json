@@ -13,9 +13,13 @@
         "strict": true
     },
     "files": [
+        "hasDefault.ts",
         "index.ts",
+        "noDefault.ts",
         "provider.ts",
-        "staticPage.ts",
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
         "utilities.ts"
     ]
 }

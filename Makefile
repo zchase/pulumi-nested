@@ -1,7 +1,7 @@
 VERSION         := 0.0.1
 
-PACK            := xyz
-PROJECT         := github.com/pulumi/pulumi-${PACK}
+PACK            := nested
+PROJECT         := github.com/zchase/pulumi-${PACK}
 
 PROVIDER        := pulumi-resource-${PACK}
 CODEGEN         := pulumi-gen-${PACK}
